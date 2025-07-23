@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone Portal - Latest PC & Mobile Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="gaming-bg"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-gamepad"></i>
+                <span>GameZone</span>
+            </div>
+            <div class="nav-menu">
+                <button class="filter-btn active" data-filter="all">All Games</button>
+                <button class="filter-btn" data-filter="pc">PC Games</button>
+                <button class="filter-btn" data-filter="mobile">Mobile Games</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-trophy"></i> GameZone Portal</h1>
+            <p>Discover the Latest & Greatest PC and Mobile Games</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Latest Games</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">4.8★</span>
+                    <span class="stat-label">Average Rating</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">10M+</span>
+                    <span class="stat-label">Downloads</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="games-section">
+                <h2><i class="fas fa-fire"></i> Latest Games</h2>
+                <div class="games-grid" id="gamesGrid">
+                    <!-- Games will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <img id="modalImage" src="" alt="Game Image">
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <div class="modal-tags">
+                        <span id="modalPlatform" class="tag"></span>
+                        <span id="modalGenre" class="tag"></span>
+                    </div>
+                    <div class="modal-rating">
+                        <div class="stars" id="modalStars"></div>
+                        <span id="modalRatingText"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h3>Description</h3>
+                <p id="modalDescription"></p>
+                
+                <h3>System Requirements</h3>
+                <div id="modalRequirements"></div>
+                
+                <div class="modal-actions">
+                    <button id="downloadBtn" class="download-btn">
+                        <i class="fas fa-download"></i> Download Now
+                    </button>
+                    <button id="rateBtn" class="rate-btn">
+                        <i class="fas fa-star"></i> Rate Game
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content rating-modal">
+            <span class="close">&times;</span>
+            <h3>Rate this Game</h3>
+            <div class="rating-stars">
+                <i class="fas fa-star rating-star" data-rating="1"></i>
+                <i class="fas fa-star rating-star" data-rating="2"></i>
+                <i class="fas fa-star rating-star" data-rating="3"></i>
+                <i class="fas fa-star rating-star" data-rating="4"></i>
+                <i class="fas fa-star rating-star" data-rating="5"></i>
+            </div>
+            <textarea id="reviewText" placeholder="Write your review (optional)..."></textarea>
+            <button id="submitRating" class="submit-rating-btn">Submit Rating</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-gamepad"></i> GameZone</h3>
+                    <p>Your ultimate destination for the latest PC and mobile games.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#pc">PC Games</a></li>
+                        <li><a href="#mobile">Mobile Games</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GameZone Portal - Powered by EC2</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

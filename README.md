@@ -43,82 +43,7 @@ A full-stack Node.js gaming portal deployed on AWS EC2, featuring automated depl
 - **Error Handling**: Graceful error handling and fallback systems
 - **Production Ready**: Optimized for cloud deployment and scaling
 
-## � Quick Start
-
-### Local Development
-```bash
-# Clone and install dependencies
-git clone https://github.com/bishal692002/GameZone.git
-cd GameZone
-npm install
-
-# Setup environment
-cp .env.example .env
-
-# Start the server
-npm start
-```
-
-Access the application at `http://localhost:3000`
-
-## ☁️ AWS EC2 Deployment
-
-### Prerequisites
-- AWS EC2 instance (Ubuntu recommended)
-- Key pair (.pem file) for SSH access
-- Security Group configured for HTTP traffic
-
-### Automated Deployment
-```bash
-# Make deployment script executable
-chmod +x deploy.sh
-
-# Deploy to EC2 (replace with your details)
-./deploy.sh YOUR_EC2_IP YOUR_KEY.pem production
-```
-
-### Manual Deployment Steps
-
-1. **Connect to EC2 Instance**
-   ```bash
-   ssh -i your-key.pem ubuntu@your-ec2-ip
-   ```
-
-2. **Server Setup** (automated by deploy.sh)
-   ```bash
-   # Update system packages
-   sudo apt update && sudo apt upgrade -y
-   
-   # Install Node.js
-   curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-   sudo apt-get install -y nodejs
-   
-   # Install PM2 globally
-   sudo npm install -g pm2
-   ```
-
-3. **Application Deployment**
-   ```bash
-   # Upload project files
-   scp -i your-key.pem -r . ubuntu@your-ec2-ip:~/gamezone-portal
-   
-   # Install dependencies
-   cd ~/gamezone-portal
-   npm install --only=production
-   
-   # Start with PM2
-   pm2 start server.js --name gamezone-portal
-   pm2 startup
-   pm2 save
-   ```
-
-### Security Group Configuration
-Configure your EC2 Security Group with these inbound rules:
-- **HTTP**: Port 80 from 0.0.0.0/0
-- **Custom TCP**: Port 3000 from 0.0.0.0/0  
-- **SSH**: Port 22 from your IP address
-
-## � Project Architecture
+## 📁 Project Architecture
 
 ```
 GameZone/
@@ -148,58 +73,24 @@ The portal showcases 12 carefully curated games across different platforms:
 - **Game Details Modal**: Detailed information with download links
 - **Responsive Cards**: Smooth hover effects and animations
 
-## � Development & Monitoring
+## 🔧 Technical Implementation Details
 
-### Local Development Commands
-```bash
-npm start                    # Start development server
-npm install                  # Install all dependencies
-```
+### Development Environment
+- **Local Development**: Node.js with Express.js framework
+- **Environment Management**: Secure configuration with environment variables
+- **Version Control**: Git workflow with GitHub integration
 
-### Production Monitoring (EC2)
-```bash
-pm2 status                   # Check application status
-pm2 logs gamezone-portal     # View application logs
-pm2 restart gamezone-portal  # Restart application
-pm2 monit                    # Real-time monitoring dashboard
-```
+### Production Infrastructure
+- **Cloud Platform**: AWS EC2 with Ubuntu Linux
+- **Process Management**: PM2 for application lifecycle management
+- **Automation**: Shell scripting for deployment and server setup
+- **Security**: Configured Security Groups for traffic control
 
-## 🔧 Environment Configuration
-
-Create a `.env` file with basic configuration:
-
-```bash
-# Server Configuration
-PORT=3000
-NODE_ENV=production
-
-# Optional for future enhancements
-STEAM_API_KEY=your_steam_key_here
-RAWG_API_KEY=your_rawg_key_here
-```
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-**Port 3000 already in use:**
-```bash
-# Kill existing Node.js processes
-sudo pkill node
-# Or use different port
-export PORT=3001 && npm start
-```
-
-**EC2 Access Issues:**
-- Verify Security Group allows inbound traffic on port 3000
-- Check that server binds to `0.0.0.0`, not `localhost`
-- Ensure SSH key permissions: `chmod 400 your-key.pem`
-
-**PM2 Process Issues:**
-```bash
-pm2 kill                     # Stop all PM2 processes
-pm2 start server.js --name gamezone-portal  # Restart application
-```
+### Frontend Technologies
+- **HTML5**: Semantic markup with modern web standards
+- **CSS3**: Responsive design with gaming-themed styling
+- **JavaScript**: Interactive features and API communication
+- **Font Awesome**: Professional iconography
 
 ## 📈 Future Enhancements
 
@@ -209,14 +100,6 @@ pm2 start server.js --name gamezone-portal  # Restart application
 - **Advanced Features**: Game search, user reviews, wishlist functionality
 - **Scaling**: Load balancer, auto-scaling groups, and CDN integration
 - **Mobile App**: React Native mobile application
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch: `git checkout -b feature/new-feature`
-3. Commit changes: `git commit -m 'Add new feature'`
-4. Push to branch: `git push origin feature/new-feature`
-5. Open Pull Request
 
 ## 📄 License
 

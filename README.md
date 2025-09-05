@@ -1,115 +1,123 @@
 # 🎮 GameZone Portal – Cloud-Hosted Gaming Hub
 
-A full-stack Node.js gaming portal deployed on AWS EC2, featuring automated deployment scripts, secure cloud infrastructure, and interactive gaming features. This project demonstrates cloud deployment expertise, full-stack development capabilities, and modern DevOps practices.
+A simple full-stack Node.js gaming portal (Express + static frontend) with a provided `Dockerfile` so you can run it locally or in any container platform.
 
-## 🚀 Project Overview
+## What I'll cover here
 
-- **Cloud Deployment**: Node.js application deployed on AWS EC2 with automated Shell scripts
-- **Security Configuration**: EC2 Security Groups configured to control inbound and outbound traffic  
-- **Game Rating System**: Interactive star-based rating system to enhance user engagement
-- **Platform Filtering**: Dynamic filtering by PC, Mobile, and Console platforms
-- **Responsive Frontend**: HTML/CSS/JavaScript frontend seamlessly integrated with Node.js backend
-- **Full-Stack Architecture**: Complete demonstration of frontend-backend integration capabilities
+- How to run the app locally (already available via `npm start`)
+- How to build and run the included Docker image (new)
+- Quick verification and troubleshooting commands
 
-## 🛠️ Technologies Used
+## Quick facts (from the repo)
 
-- **Cloud Platform**: AWS EC2
-- **Operating System**: Linux (Ubuntu)  
-- **Automation**: Shell Scripting for deployment
-- **Backend**: Node.js, Express.js
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Process Management**: PM2
-- **Version Control**: Git & GitHub
+- Default port: 3000 (controlled by `PORT` env var)
+- Start command: `npm start` (runs `node server.js`)
+- Health endpoint: `/api/health` (used by the Dockerfile healthcheck)
 
-## 🎯 Key Features
+## Run locally
 
-### 🎮 Gaming Portal Interface
-- **Interactive Game Library**: Curated collection of 12 popular games across platforms
-- **Star Rating System**: User-driven 5-star rating system with real-time feedback
-- **Platform-Based Filtering**: Dynamic filtering by PC, Mobile, Console, or All Games
-- **Responsive Design**: Mobile-optimized interface with smooth animations
-- **Game Details Modal**: Comprehensive game information with download links
+1. Install dependencies:
 
-### ☁️ Cloud Infrastructure  
-- **AWS EC2 Deployment**: Production-ready hosting on Amazon Web Services
-- **Automated Setup**: Shell scripts for streamlined Ubuntu server configuration
-- **Security Groups**: Properly configured inbound/outbound traffic rules
-- **Process Management**: PM2 integration for application monitoring and auto-restart
-- **Environment Configuration**: Secure environment variable management
-
-### 🔧 Technical Implementation
-- **Full-Stack Architecture**: Node.js backend with HTML/CSS/JS frontend
-- **RESTful API**: Clean API endpoints for game ratings and data management  
-- **Error Handling**: Graceful error handling and fallback systems
-- **Production Ready**: Optimized for cloud deployment and scaling
-
-## 📁 Project Architecture
-
-```
-GameZone/
-├── server.js              # Express.js backend server
-├── package.json           # Node.js dependencies and scripts
-├── .env.example          # Environment variables template
-├── deploy.sh             # AWS EC2 deployment automation script
-├── public/               # Frontend static files
-│   ├── index.html        # Main HTML page
-│   ├── styles.css        # Responsive CSS styling
-│   └── script.js         # Interactive JavaScript
-└── README.md             # Project documentation
+```bash
+npm install
 ```
 
-## 🎮 Gaming Features
+2. Start the app:
 
-### Game Database
-The portal showcases 12 carefully curated games across different platforms:
+```bash
+npm start
+```
 
-**PC Games**: Cyberpunk 2077, Baldur's Gate 3, Starfield, The Witcher 3  
-**Mobile Games**: Genshin Impact, Call of Duty Mobile, PUBG Mobile, Among Us, Mobile Legends  
-**Console Games**: Hogwarts Legacy, Minecraft, GTA V
+Open http://localhost:3000 in your browser.
 
-### Interactive Elements
-- **Star Rating System**: Users can rate games from 1-5 stars
-- **Platform Filtering**: Dynamic filtering buttons (All, PC, Mobile, Console)
-- **Game Details Modal**: Detailed information with download links
-- **Responsive Cards**: Smooth hover effects and animations
+## Run with Docker
 
-## 🔧 Technical Implementation Details
+The repository includes a `Dockerfile` that sets `NODE_ENV=production` and `PORT=3000` by default and exposes port `3000`.
 
-### Development Environment
-- **Local Development**: Node.js with Express.js framework
-- **Environment Management**: Secure configuration with environment variables
-- **Version Control**: Git workflow with GitHub integration
+Build the image:
 
-### Production Infrastructure
-- **Cloud Platform**: AWS EC2 with Ubuntu Linux
-- **Process Management**: PM2 for application lifecycle management
-- **Automation**: Shell scripting for deployment and server setup
-- **Security**: Configured Security Groups for traffic control
+```bash
+docker build -t gamezone:latest .
+```
 
-### Frontend Technologies
-- **HTML5**: Semantic markup with modern web standards
-- **CSS3**: Responsive design with gaming-themed styling
-- **JavaScript**: Interactive features and API communication
-- **Font Awesome**: Professional iconography
+Run the container (basic):
 
-## 📈 Future Enhancements
+```bash
+docker run -d --name gamezone -p 3000:3000 gamezone:latest
+```
 
-- **Database Integration**: PostgreSQL/MongoDB for persistent game data and user ratings
-- **User Authentication**: Login system with personalized game recommendations  
-- **API Integration**: Steam API, RAWG API for real-time game data and pricing
-- **Advanced Features**: Game search, user reviews, wishlist functionality
-- **Scaling**: Load balancer, auto-scaling groups, and CDN integration
-- **Mobile App**: React Native mobile application
+If you want to pass environment variables (for example API keys or a different port):
 
-## 📄 License
+```bash
+docker run -d --name gamezone -p 3000:3000 \
+	-e NODE_ENV=production \
+	-e PORT=3000 \
+	-e STEAM_API_KEY=your_steam_key \
+	-e RAWG_API_KEY=your_rawg_key \
+	gamezone:latest
+```
 
-This project is licensed under the MIT License.
+Notes:
+- The `Dockerfile` contains a HEALTHCHECK that hits `http://127.0.0.1:${PORT}/api/health`.
+- The app listens on `0.0.0.0:${PORT}` so binding `-p 3000:3000` exposes it to your host.
 
-## 🎮 Live Demo
+## Docker Compose (optional)
 
-**🌐 Live Application**: Access the deployed GameZone Portal on AWS EC2  
-**🔗 GitHub Repository**: [https://github.com/bishal692002/GameZone](https://github.com/bishal692002/GameZone)
+Create a `docker-compose.yml` with the following minimal service to run the app:
 
----
+```yaml
+version: '3.8'
+services:
+	gamezone:
+		image: gamezone:latest
+		build: .
+		ports:
+			- '3000:3000'
+		environment:
+			- NODE_ENV=production
+			- PORT=3000
+			- STEAM_API_KEY=${STEAM_API_KEY}
+			- RAWG_API_KEY=${RAWG_API_KEY}
 
-**🚀 Showcasing cloud deployment expertise, full-stack development skills, and modern DevOps practices through an engaging gaming portal experience.**
+```
+
+Then start:
+
+```bash
+docker compose up --build -d
+```
+
+## Verify the running container
+
+- Check container status and logs:
+
+```bash
+docker ps -f name=gamezone
+docker logs -f gamezone
+```
+
+- Quick health check (host):
+
+```bash
+curl -s http://localhost:3000/api/health | jq .
+```
+
+- Or open in a browser: http://localhost:3000
+
+## Troubleshooting
+
+- If port 3000 is in use, change the host port mapping (e.g. `-p 4000:3000`) or set `PORT` inside the container.
+- To view recent logs: `docker logs -f gamezone`.
+- If the healthcheck fails, check `docker logs` for stack traces and ensure the container has the right `PORT` env var.
+
+## Environment variables
+
+- Optional variables used by the app:
+	- `PORT` (default 3000)
+	- `NODE_ENV` (development|production)
+	- `STEAM_API_KEY` (optional)
+	- `RAWG_API_KEY` (optional)
+
+## Completion / Verification
+
+I updated this README to include Docker build/run instructions, verification commands, and notes about the `Dockerfile` healthcheck and default port. The `Dockerfile`, `package.json`, and `server.js` in the repo already match these instructions (default PORT=3000 and start command `node server.js`).
